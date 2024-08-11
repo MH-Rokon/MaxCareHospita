@@ -32,7 +32,7 @@ from django.views.generic.edit import FormView
 class UserRegistrationView(FormView):
     template_name = 'accounts/user_registration.html'
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('info')
 
     def form_valid(self, form):
         user = form.save()

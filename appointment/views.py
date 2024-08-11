@@ -15,7 +15,7 @@ def appointment_create(request, doctor_id):
     try:
         patient_instance = patient.objects.get(user=request.user)
     except patient.DoesNotExist:
-        return HttpResponseBadRequest("User is not registered as a patient.")
+        return HttpResponseBadRequest("User is not registered as a patient. Click on the profile and create your patient account first")
 
     if request.method == 'POST':
         form = AppointmentForm(request.POST, user=request.user, doctor=doctor_instance)

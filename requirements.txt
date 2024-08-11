@@ -2,6 +2,7 @@ asgiref
 asttokens
 audioread
 axios
+Brotli
 certifi
 cffi
 charset-normalizer
@@ -10,6 +11,7 @@ colorama
 comm
 contourpy
 cryptography
+cssselect2
 cycler
 debugpy
 decorator
@@ -26,6 +28,7 @@ djangorestframework
 exceptiongroup
 executing
 fonttools
+html5lib
 idna
 imageio
 ipykernel
@@ -52,6 +55,7 @@ numpy
 oauthlib
 opencv-python
 packaging
+pandas
 parso
 pillow
 platformdirs
@@ -62,13 +66,16 @@ psycopg2
 psycopg2-binary
 pure-eval
 pycparser
+pydyf
 Pygments
 PyJWT
 pyparsing
+pyphen
 python-dateutil
+python-decouple
 python3-openid
 pytz
-# pywin32
+pywin32
 pyzmq
 requests
 requests-oauthlib
@@ -83,10 +90,14 @@ sqlparse
 stack-data
 threadpoolctl
 tifffile
+tinycss2
 tornado
 traitlets
 typing_extensions
 tzdata
 urllib3
 wcwidth
+weasyprint
+webencodings
 whitenoise
+zopfli

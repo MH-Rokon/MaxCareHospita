@@ -21,7 +21,7 @@ SECRET_KEY = 'django-insecure-c#33tzb#*x+6je0dt^6f%o5-czr847hbxwyu8=7e49&&ukrk$@
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://maxcarehospital.onrender.com', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://maxcarehospita.onrender.com', 'https://*.127.0.0.1']
 
 # Application definition
 

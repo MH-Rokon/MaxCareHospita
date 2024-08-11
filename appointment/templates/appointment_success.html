@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}My Appointments{% endblock %}
+
+{% block content %}
+    <h1 style="text-align: center; color: #2980b9;">My Appointments</h1>
+
+    <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+        {% for appointment in appointments %}
+        <div style="background-color: #ffffff; padding: 20px; margin: 10px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 300px;">
+            <div style="color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 15px; text-align: center;">Appointment Details</div>
+            <div style="background-color: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <p style="background-color: #ecf0f1; padding: 8px; border-radius: 5px;"><strong style="color: #3498db;">Doctor:</strong> {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</p>
+                <p style="background-color: #ecf0f1; padding: 8px; border-radius: 5px;"><strong style="color: #3498db;">Patient:</strong> {{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</p>
+                <p style="background-color: #ecf0f1; padding: 8px; border-radius: 5px;"><strong style="color: #3498db;">Type:</strong> {{ appointment.get_appointment_type_display }}</p>
+                <p style="background-color: #ecf0f1; padding: 8px; border-radius: 5px;"><strong style="color: #3498db;">Status:</strong> {{ appointment.get_appointment_status_display }}</p>
+                <p style="background-color: #ecf0f1; padding: 8px; border-radius: 5px;"><strong style="color: #3498db;">Symptom:</strong> {{ appointment.symptom }}</p>
+                <p style="background-color: #ecf0f1; padding: 8px; border-radius: 5px;"><strong style="color: #3498db;">Time:</strong> {{ appointment.time }}</p>
+                <form action="{% url 'delete_appointment' appointment.id %}" method="POST" style="margin-bottom: 10px;">
+                    {% csrf_token %}
+                    <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;" onclick="return confirm('Are you sure you want to delete this appointment?')">Delete</button>
+                </form>
+                <!-- Assuming you want to allow review for each appointment -->
+                <form action="{% url 'review' appointment.doctor.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" style="background-color: #3498db; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;">
+                        Give Review
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div>No appointments found.</div>
+        {% endfor %}
+    </div>
+{% endblock %}

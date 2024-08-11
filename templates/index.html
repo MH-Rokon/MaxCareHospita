@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Hospital</title>
+</head>
+
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f0f0f0; color: #333;">
+
+    <!-- Banner Section -->
+    <div class="banner-container" style="max-width: 1200px; margin: 20px auto; padding: 20px; background-color: #3498db; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+        <div class="banner" style="display: flex; align-items: center;">
+
+            <!-- Left Side (Text) -->
+            <div class="banner-left" style="flex: 1; padding: 20px; background-color: #2980b9; border-radius: 10px;">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #ecf0f1;">I am Md Mosharof Hosen</h3>
+                <h1 style="font-size: 2.5em; margin-bottom: 10px; color: #ecf0f1;">Providing Quality<br>Max Care</h1>
+                <p style="font-size: 1.1em; line-height: 1.6; text-align: justify; color: #ecf0f1;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at nunc feugiat, pretium quam malesuada, luctus ex. Duis eu dui rhoncus, faucibus diam ac, iaculis urna. Phasellus pellentesque dui in suscipit eleifend.</p>
+            </div>
+
+            <!-- Right Side (Image) -->
+            <div class="banner-img" style="flex: 1; text-align: center; padding: 20px;">
+                <img class="bn-img" src="static/doctor2.jpg" alt="Doctor Image" style="max-width: 400px; height: 450px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="services-section" style="background-color: #3498db; padding: 20px;">
+        <h1 style="text-align: center; margin-bottom: 40px; color: #ecf0f1;">Our Services</h1>
+
+        <div style="text-align: center;">
+            {% for service in services %}
+            <div style="background-color: #2980b9; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); width: 300px; margin: 20px; display: inline-block; vertical-align: top;">
+                <div style="height: 200px; overflow: hidden;">
+                    <img src="{{ service.image.url }}" alt="{{ service.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div style="padding: 16px;">
+                    <h2 style="font-size: 1.5em; margin: 0 0 10px; color: #ecf0f1;">{{ service.name }}</h2>
+                    <p style="font-size: 1em; margin: 8px 0; color: #ecf0f1;">{{ service.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Doctors Section -->
+    <div class="doctors-section" style="background-color: #2980b9; padding: 20px;">
+        <h1 style="text-align: center; margin-bottom: 40px; color: #ecf0f1;">Our Doctors</h1>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            {% for doc in doctors %}
+                <div class="doctor-card" style="background-color: #3498db; border-radius: 8px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; width: 300px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    {% if doc.image %}
+                        <div style="height: 200px; overflow: hidden;">
+                            <img src="{{ doc.image.url }}" alt="Doctor Image" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                    {% endif %}
+                    <div style="padding: 16px;">
+                        <h2 style="font-size: 1.5em; margin: 0 0 10px; cursor: pointer; color: #ecf0f1;">
+                            <a href="{% url 'detail' doc.id %}" style="text-decoration: none; color: inherit;">{{ doc.user.get_full_name }}</a>
+                        </h2>
+                        <p style="font-size: 1em; margin: 8px 0; color: #ecf0f1;">
+                            <strong>Specializations:</strong>
+                            {% for spec in doc.specialization.all %}
+                                {{ spec.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                No specializations listed
+                            {% endfor %}
+                        </p>
+                        <p style="font-size: 1em; margin: 8px 0; color: #ecf0f1;">
+                            <strong>Designations:</strong>
+                            {% for desig in doc.Designation.all %}
+                                {{ desig.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                No designations listed
+                            {% endfor %}
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <button onclick="window.location.href='{% url 'detail' doc.id %}'" style="background-color: #007bff; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 1em; margin: 8px 0; border-radius: 4px; cursor: pointer;">
+                                View Details
+                            </button>
+                            <button onclick="window.location.href='{% url 'appointment' doc.id %}'" style="background-color: #28a745; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 1em; margin: 8px 0; border-radius: 4px; cursor: pointer;">
+                                Take Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}

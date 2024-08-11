@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor List</title>
+</head>
+<body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f0f0f0; color: #333; margin: 0; padding: 20px;">
+
+    <!-- Dropdown Filters -->
+    <div style="text-align: center; margin: 20px;">
+        <form id="filterForm" method="GET">
+            <label for="specialization-filter">Filter by Specialization:</label>
+            <select id="specialization-filter" name="specialization" onchange="this.form.submit()" style="padding: 10px; font-size: 1em; margin-left: 10px; background-color: #fff; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="">All</option>
+                {% for specialization in all_specializations %}
+                    <option value="{{ specialization.id }}" {% if specialization.id == request.GET.specialization|default_if_none:"" %} selected {% endif %}>{{ specialization.name }}</option>
+                {% endfor %}
+            </select>
+            <label for="designation-filter">Filter by Designation:</label>
+            <select id="designation-filter" name="designation" onchange="this.form.submit()" style="padding: 10px; font-size: 1em; margin-left: 10px; background-color: #fff; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="">All</option>
+                {% for designation in all_designations %}
+                    <option value="{{ designation.id }}" {% if designation.id == request.GET.designation|default_if_none:"" %} selected {% endif %}>{{ designation.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <!-- Doctor Cards -->
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center ;">
+        {% for doc in doctors %}
+            <div class="doctor-card" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); width: 300px; transition: transform 0.2s, box-shadow 0.2s; margin-bottom: 20px;">
+                {% if doc.image %}
+                    <div style="height: 200px; overflow: hidden;">
+                        <img src="{{ doc.image.url }}" alt="Doctor Image" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                {% endif %}
+                <div style="padding: 16px;">
+                    <h2 style="font-size: 1.5em; margin: 0 0 10px; cursor: pointer; color: #007bff;">
+                        <a href="{% url 'detail' doc.id %}" style="text-decoration: none; color: inherit;">{{ doc.user.get_full_name }}</a>
+                    </h2>
+                    <p style="font-size: 1em; margin: 8px 0; color: #555;">
+                        <strong>Specializations:</strong>
+                        {% for spec in doc.specialization.all %}
+                            {{ spec.name }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            No specializations listed
+                        {% endfor %}
+                    </p>
+                    <p style="font-size: 1em; margin: 8px 0; color: #555;">
+                        <strong>Designations:</strong>
+                        {% for desig in doc.Designation.all %}
+                            {{ desig.name }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            No designations listed
+                        {% endfor %}
+                    </p>
+                   <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button onclick="window.location.href='{% url 'detail' doc.id %}'" style="background-color: #007bff; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 1em; margin: 8px 0; border-radius: 4px; cursor: pointer;">
+                        View Details
+                    </button>
+                    <button onclick="window.location.href='{% url 'appointment' doc.id %}'" style="background-color: #28a745; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 1em; margin: 8px 0; border-radius: 4px; cursor: pointer;">
+                        Take Appointment
+                    </button>
+                </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Hospital</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f0f0f0;">
+    <!-- Navbar -->
+    <nav style="display: flex; justify-content: space-between; align-items: center; background-color: #2980b9; padding: 10px 20px;">
+        <div style="display: flex; align-items: center;">
+            <img src="{% static 'maxlogo.jpg' %}" alt="Hospital Logo" style="height: 40px; margin-right: 10px;">
+            <span style="color: #ecf0f1; font-size: 24px; font-weight: bold;">MAX CARE</span>
+        </div>
+        {% if user.is_authenticated %}
+            <div style="display: flex; align-items: center;">
+                {% if user.is_staff %}
+                    <a href="{% url 'list' %}" style="color: #ecf0f1; text-decoration: none; margin-left: 20px; font-size: 18px;">Appointments</a>
+                {% endif %}
+                <a href="{% url 'info' %}" style="color: #ecf0f1; text-decoration: none; margin-left: 20px; font-size: 18px;">Profile</a>
+                <a href="{% url 'logout' %}" style="color: #ecf0f1; text-decoration: none; margin-left: 20px; font-size: 18px;">Log Out</a>
+            </div>
+        {% else %}
+            <div style="display: flex; align-items: center;">
+                <a href="{% url 'login' %}" style="color: #ecf0f1; text-decoration: none; margin-left: 20px; font-size: 18px;">Login</a>
+                <a href="{% url 'register' %}" style="color: #ecf0f1; text-decoration: none; margin-left: 20px; font-size: 18px;">Register</a>
+            </div>
+        {% endif %}
+    </nav>
+
+    <!-- Menu Section -->
+    <div class="custom-navbar" style="background-color:#2980b9; overflow: hidden; text-align: center;">
+        <a href="{% url 'index' %}" style="display: inline-block; padding: 14px 20px; color: #ecf0f1; text-decoration: none; transition: background-color 0.3s;">Home</a>
+        <a href="{% url 'doctor' %}" style="display: inline-block; padding: 14px 20px; color: #ecf0f1; text-decoration: none; transition: background-color 0.3s;">Doctor</a>
+        <a href="{% url 'service_view' %}" style="display: inline-block; padding: 14px 20px; color: #ecf0f1; text-decoration: none; transition: background-color 0.3s;">Services</a>
+        <!-- Assuming you want to link to each doctor's appointment page -->
+        <a href="{% url 'success' %}" style="display: inline-block; padding: 14px 20px; color: #ecf0f1; text-decoration: none; transition: background-color 0.3s;"> My Appointment</a>
+       
+        <a href="{% url 'contact' %}" style="display: inline-block; padding: 14px 20px; color: #ecf0f1; text-decoration: none; transition: background-color 0.3s;">Contact</a>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+    <footer style="background-color: #27403c; color: white; padding: 20px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 style="margin-bottom: 15px; font-size: 18px; font-weight: bold;">Contact Us</h5>
+                    <p>Email: max@gmail.com</p>
+                    <p>Phone: +880123456789</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 style="margin-bottom: 15px; font-size: 18px; font-weight: bold;">Quick Links</h5>
+                    <ul style="list-style: none; padding: 0; display: flex; gap: 10px;">
+                        <li>
+                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Fpust_sixvoices" target="_blank" style="color: white;">
+                                <img src="{% static 'twitter.png' %}" alt="Twitter" style="width: 40px; height: 40px; border-radius: 50%;">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/groups/1854152791293038" target="_blank" style="color: white;">
+                                <img src="{% static 'facebook.png' %}" alt="Facebook" style="width: 40px; height: 40px; border-radius: 50%;">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/" target="_blank" style="color: white;">
+                                <img src="{% static 'youtube.png' %}" alt="YouTube" style="width: 40px; height: 40px; border-radius: 50%;">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/" target="_blank" style="color: white;">
+                                <img src="{% static 'linkedin.webp' %}" alt="LinkedIn" style="width: 40px; height: 40px; border-radius: 50%;">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    
+</body>
+</html>

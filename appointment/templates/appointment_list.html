@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment List</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f2f2f2; padding: 20px;">
+
+    <h1 style="text-align: center; color: #2980b9;">Appointment List</h1>
+
+    <table style="width: 100%; background-color: #ffffff; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; margin-top: 20px;">
+        <thead>
+            <tr style="background-color: #3498db; color: white;">
+                <th style="padding: 12px; text-align: left;">Doctor</th>
+                <th style="padding: 12px; text-align: left;">Patient</th>
+                <th style="padding: 12px; text-align: left;">Type</th>
+                <th style="padding: 12px; text-align: left;">Status</th>
+                <th style="padding: 12px; text-align: left;">Symptom</th>
+                <th style="padding: 12px; text-align: left;">Time</th>
+                <th style="padding: 12px; text-align: left;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 12px; text-align: left;">{{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
+                <td style="padding: 12px; text-align: left;">{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                <td style="padding: 12px; text-align: left;">{{ appointment.appointment_type }}</td>
+                <td style="padding: 12px; text-align: left;">{{ appointment.appointment_status }}</td>
+               
+                <td style="padding: 12px; text-align: left;">{{ appointment.symptom }}</td>
+                <td style="padding: 12px; text-align: left;">{{ appointment.time }}</td>
+                <td style="padding: 12px; text-align: left;">
+                    <form action="{% url 'delete_appointment' appointment.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;" onclick="return confirm('Are you sure you want to delete this appointment?')">Delete</button>
+                    </form>
+                </td>
+                <td style="padding: 12px; text-align: left;">
+                    <form action="{% url 'edit_appointment' appointment.id %}" method="GET">
+                        <button type="submit" style="background-color: #3498db; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px;">Edit</button>
+                    </form>
+                </td>
+                
+                
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="padding: 12px; text-align: center;">No appointments found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+
+</body>
+</html>
+{% endblock %}

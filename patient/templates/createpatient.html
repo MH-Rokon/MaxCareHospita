@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Patient{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="width: 500px; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2>Create Patient Profile</h2>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="margin-bottom: 15px; background-color: #3498db; padding: 15px; border-radius: 8px;">
+                {{ form.image.errors }}
+                <label for="{{ form.image.id_for_label }}" style="color: white;">Profile Image:</label><br>
+                {{ form.image }}
+            </div>
+            <div style="margin-bottom: 15px; background-color: #2980b9; padding: 15px; border-radius: 8px;">
+                {{ form.phone_no.errors }}
+                <label for="{{ form.phone_no.id_for_label }}" style="color: white;">Phone Number:</label><br>
+                {{ form.phone_no }}
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" style="background-color: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 50%; margin-top: 20px;">Create Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

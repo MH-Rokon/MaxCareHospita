@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ doctor.user.get_full_name }} - Doctor Details{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ doctor.user.get_full_name }} - Doctor Details</title>
+</head>
+
+<body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f0f0f0; color: #333; margin: 0; padding: 20px;">
+
+    <div style="display: flex; justify-content: center; align-items: stretch; gap: 20px;">
+
+        <!-- Left Side (Details) -->
+        <div style="flex: 1; background-color: #2980b9; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px; color: #fff;">
+            <h2 style="font-size: 1.5em; margin: 10px 0; cursor: pointer;">{{ doctor.user.get_full_name }}</h2>
+
+            <div style="background-color: #3498db; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                <p style="margin: 8px 0;"><strong>Specializations:</strong>
+                    {% for specialization in doctor.specialization.all %}
+                        <span style="background-color: #d1ecf1; color: #0d6efd; padding: 5px; border-radius: 6px;">{{ specialization.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        <span style="background-color: #f8d7da; color: #721c24; padding: 5px; border-radius: 6px;">None</span>
+                    {% endfor %}
+                </p>
+
+                <p style="margin: 8px 0;"><strong>Designations:</strong>
+                    {% for designation in doctor.Designation.all %}
+                        <span style="background-color: #d1ecf1; color: #0d6efd; padding: 5px; border-radius: 6px;">{{ designation.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        <span style="background-color: #f8d7da; color: #721c24; padding: 5px; border-radius: 6px;">None</span>
+                    {% endfor %}
+                </p>
+
+                <p style="margin: 8px 0;"><strong>Available Time:</strong> {{ doctor.availableTime.time }}</p>
+                <p style="margin: 8px 0;"><strong>Fee:</strong> ${{ doctor.fee }}</p>
+                <p style="margin: 8px 0;"><strong>Meeting Link:</strong> <a href="{{ doctor.meet_link }}" style="color: #fff; text-decoration: none;">{{ doctor.meet_link }}</a></p>
+            </div>
+
+            <h3 style="margin-top: 20px;">Reviews:</h3>
+            <ul style="list-style-type: none; padding: 0;">
+                {% for review in doctor.review_set.all %}
+                    <li style="margin-bottom: 15px;">
+                        <p style="margin-bottom: 5px;"><strong>Reviewer:</strong> {{ review.reviewer.user.get_full_name }}</p>
+                        <p style="margin-bottom: 5px;"><strong>Rating:</strong> {{ review.rating }}</p>
+                        <p style="margin-bottom: 5px;"><strong>Review:</strong> {{ review.body }}</p>
+                        <p style="margin-bottom: 5px;"><strong>Created:</strong> {{ review.created }}</p>
+                    </li>
+                {% empty %}
+                    <li>No reviews yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Right Side (Image) -->
+        <div style="flex: 1; background-color: #3498db; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px;">
+            {% if doctor.image %}
+                <img src="{{ doctor.image.url }}" alt="Doctor Image" style="width: 100%; display: block; border-radius: 12px;">
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; height: 111vh;">
+    <div style="width: 500px; height:500; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      
+<div class="bg-white px-3 py-4 rounded-xl my-6 text-align-center color-navyblue">
+    <h1 class="font-bold text-3xl text-center pb-5 text-align-center ">Log In</h1>
+    <div class="w-full mt-10">
+            <form method="post">
+                {% csrf_token %}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field.errors }}
+                    {{ hidden_field }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                <div style="margin-bottom: 15px; background-color: #3498db; padding: 15px; border-radius: 8px;">
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                        <input type="{{ field.widget_type }}" id="{{ field.id_for_label }}" name="{{ field.name }}"
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                               placeholder="{{ field.label }}">
+                        {% if field.errors %}
+                            <p class="mt-2 text-sm text-red-600" id="email-error">{{ field.errors }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div style="margin-bottom: 15px; background-color: #3498db; padding: 15px; border-radius: 8px;">
+                    <button type="submit" class="w-full" style="background-color:#81d4d8; color: white; padding: 10px 16px; border-radius: 8px; border: none; cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#003300'" onmouseout="this.style.backgroundColor='#004d00'">
+                        Log In
+                    </button>
+                    
+                </div>
+                
+            </form>
+        </div>
+    </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

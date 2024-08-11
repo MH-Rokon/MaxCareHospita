@@ -75,7 +75,7 @@ python-dateutil
 python-decouple
 python3-openid
 pytz
-pywin32
+
 pyzmq
 requests
 requests-oauthlib
